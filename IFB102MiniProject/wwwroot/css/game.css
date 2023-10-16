@@ -1,0 +1,56 @@
+﻿body {
+
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    grid-template-rows: auto auto 1fr 1fr 1fr auto auto;
+}
+
+.battleResultsInfo {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    background-color: red;
+    height: 500px;
+    text-align: center;
+    overflow-y: scroll;
+}
+
+.playerInfo {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    background-color: pink;
+    margin-left: auto;
+    margin-right: 0;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.playerInfo {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.aiInfo {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    background-color: pink;
+}
+
+.progress {
+    border: black 2px solid;
+    width: 200px;
+    margin-top: 5px;
+}
+
+.playerButton {
+    width: 200px;
+    border-radius: 12px;
+}

@@ -1,0 +1,33 @@
+﻿@page
+@model IFB102MiniProject.Pages.GameModel
+@{
+}
+<head>
+    <link rel="stylesheet" href="/css/game.css">
+</head>
+
+<div class="grid-container">
+        <div class="playerInfo">
+            <div id="playerHPText">HP: </div>
+            <div class="progress">
+                <div class="progress-bar bg-success" id="playerHP" role="progressbar" style="width: 100%"></div>
+            </div>
+            <div id="playerMPText">MP: </div>
+            <div class="progress">
+                <div class="progress-bar " id="playerMP" role="progressbar" style="width: 100%"></div>
+            </div>
+            <br/>
+            <button class="playerButton" id="attack" onClick="playerAttack()">Attack</button>
+        </div>
+        <div class="aiInfo">
+            <div id="aiHPText">HP: </div>
+            <div class="progress">
+                <div class="progress-bar bg-success" id="aiHP" role="progressbar" style="width: 100%"></div>
+            </div>
+        </div>
+        <div class="battleResultsInfo" id="battleResults"></div>
+</div>
+
+@section Scripts {
+    <script src="~/js/gameCode.js" asp-append-version="true"></script>
+}
