@@ -5,6 +5,17 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <img src="/images/Looloo-World.png" />
+    <br />
+    Name: <input id="playerNameInput" value="Player"/>
+    <button onclick="setName()">Play!</button>
 </div>
+
+<script>
+    function setName()
+    {
+        var playerName = document.getElementById("playerNameInput").value;
+        sessionStorage.setItem("playerName", playerName);
+        window.location.href = "/Game";
+    }
+</script>

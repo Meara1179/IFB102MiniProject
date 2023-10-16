@@ -1,7 +1,14 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+#if !DEBUG
+builder.WebHost.UseUrls("http://*:5000;");
+#endif
 
 var app = builder.Build();
 
@@ -13,7 +20,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

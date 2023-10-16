@@ -8,6 +8,8 @@
 
 <div class="grid-container">
         <div class="playerInfo">
+            <div id="playerNameText" style="display: inline-block">Name: </div>
+            <img src="images/Owl.png" style="display: inline-block"/>    
             <div id="playerHPText">HP: </div>
             <div class="progress">
                 <div class="progress-bar bg-success" id="playerHP" role="progressbar" style="width: 100%"></div>
@@ -18,13 +20,16 @@
             </div>
             <br/>
             <button class="playerButton" id="attack" onClick="playerAttack()">Attack</button>
+            <button class="playerButton" id="specialAttack" onClick="playerSpecialAttack()">Leech Slash | 25MP</button>
         </div>
         <div class="aiInfo">
+            <div id="aiNameText" style="display: inline-block">Name: </div>
+            <img src="images/slime.png" style="display: inline-block" />
             <div id="aiHPText">HP: </div>
             <div class="progress">
                 <div class="progress-bar bg-success" id="aiHP" role="progressbar" style="width: 100%"></div>
             </div>
-        </div>
+    </div>
         <div class="battleResultsInfo" id="battleResults"></div>
 </div>
 
