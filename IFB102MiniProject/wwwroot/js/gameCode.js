@@ -19,13 +19,15 @@ var aiHPText = document.getElementById("aiHPText");
 var aiHPBar = document.getElementById("aiHP");
 
 var clashResult;
-var turnCount = 1;
+var roundCount = 1;
 var fightCount = 0;
 var fightStatus = 0;
 
 var battleResultsElement = document.getElementById("battleResults");
 var attackButton = document.getElementById("attack");
 var specialAttackButton = document.getElementById("specialAttack");
+
+var highestFightCount;
 
 function startOfGame() {
     playerName = sessionStorage.getItem("playerName");
@@ -34,13 +36,20 @@ function startOfGame() {
     playerCurrentMP = playerMaxMP;
     fightCount = 0;
 
+    highestFightCount = sessionStorage.getItem("highestFightCount");
+    if (highestFightCount != null) {
+    }
+    else {
+        highestFightCount = 0;
+    }
+
     startOfFight();
 }
 
 function startOfFight() {
     fightCount++;
     fightStatus = 0;
-    turnCount = 1;
+    roundCount = 1;
     battleResultsElement.innerHTML = "";
     attackButton.innerHTML = "Attack";
     playerCurrentMP = playerMaxMP;
@@ -77,6 +86,10 @@ function ClashCalculator()
                 playerCurrentHP += guardedDamage;
             }
         }
+        else if (playerAction.actionType == "Guard")
+        {
+            clashResult = `${playerName} won! ${playerName} guarded and dealt 0 damage.`;
+        }
         else {
             clashResult = `${playerName} won! ${aiName} took ${playerAction.actionRoll} damage!`;
             aiCurrentHP -= playerAction.actionRoll;
@@ -89,7 +102,7 @@ function ClashCalculator()
     else if (clashWinner == aiName) {
         if (playerAction.actionType == "Guard") {
             var guardedDamage = aiAction.actionRoll - playerAction.actionRoll;
-            clashResult = `${aiAction} won! ${playerName} guarded and took ${guardedDamage} damage!`;
+            clashResult = `${aiName} won! ${playerName} guarded and took ${guardedDamage} damage!`;
             playerCurrentHP -= guardedDamage;
         }
         else {
@@ -101,9 +114,9 @@ function ClashCalculator()
         clashResult = "The clash resulted in a draw.";
     }
 
-    addResultText(`Turn: ${turnCount} <br>${playerName}'s Roll: ${playerAction.actionRoll} <br>${aiName}'s Roll: ${aiAction.actionRoll} <br>${clashResult} <br>`);
-    turnCount++;
-    endOfTurn();
+    addResultText(`Round: ${roundCount} <br>${playerName}'s Roll: ${playerAction.actionRoll} <br>${aiName}'s Roll: ${aiAction.actionRoll} <br>${clashResult} <br>`);
+    roundCount++;
+    endOfRound();
 }
 
 function addResultText(resultText) {
@@ -115,7 +128,7 @@ function addResultText(resultText) {
 function playerAttack() {
     if (fightStatus == 0) {
         playerAction.actionType = "Attack";
-        playerAction.actionRoll = Math.floor(Math.random() * (12 - 8 + 1) + 8)
+        playerAction.actionRoll = Math.floor(Math.random() * (15 - 8 + 1) + 8);
 
         aiAttack();
         ClashCalculator();
@@ -132,19 +145,27 @@ function playerSpecialAttack() {
     if (playerCurrentMP >= 25) {
         playerCurrentMP -= 25;
         playerAction.actionType = "Special Attack";
-        playerAction.actionRoll = Math.floor(Math.random() * (20 - 15 + 1) + 15)
+        playerAction.actionRoll = Math.floor(Math.random() * (20 - 15 + 1) + 15);
 
         aiAttack();
         ClashCalculator();
     }
 }
 
-function aiAttack() {
-    aiAction.actionType = "Attack";
-    aiAction.actionRoll = 10
+function playerGuard() {
+    playerAction.actionType = "Guard";
+    playerAction.actionRoll = Math.floor(Math.random() * (15 - 8 + 1) + 8);
+
+    aiAttack();
+    ClashCalculator();
 }
 
-function endOfTurn() {
+function aiAttack() {
+    aiAction.actionType = "Attack";
+    aiAction.actionRoll = Math.floor(Math.random() * (15 - 8 + 1) + 8);
+}
+
+function endOfRound() {
     if (playerCurrentHP > playerMaxHP) {
         playerCurrentHP = playerMaxHP;
     }
@@ -168,6 +189,11 @@ function endOfTurn() {
         fightStatus = 1;
         addResultText(`${aiName} was defeated! You win!!! <br> You've beaten ${fightCount} enemies.`)
         specialAttackButton.disabled = true;
+
+        if (highestFightCount < fightCount) {
+            highestFightCount = fightCount;
+            sessionStorage.setItem("highestFightCount", highestFightCount);
+        }
     }
     updateStatus();
 }

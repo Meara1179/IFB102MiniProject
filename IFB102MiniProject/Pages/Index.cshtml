@@ -10,6 +10,9 @@
     Name: <input id="playerNameInput" value="Player"/>
     <button onclick="setName()">Play!</button>
 </div>
+<div class="text-center">
+    <br />Highest fight count: <label id="highestFightCountLabel"></label>
+</div>
 
 <script>
     function setName()
@@ -18,4 +21,34 @@
         sessionStorage.setItem("playerName", playerName);
         window.location.href = "/Game";
     }
+    
+    function setHighestFightCountLabel()
+    {
+        var highestFightCountLabel = document.getElementById("highestFightCountLabel");
+        var highestFightCount = sessionStorage.getItem("highestFightCount");
+
+        if (highestFightCount != null) {
+            highestFightCountLabel.innerHTML = highestFightCount;
+        }
+        else { 
+            highestFightCountLabel.innerHTML = 0;
+        }
+    }
+
+    function loadName() { 
+        var playerNameLabel = document.getElementById("playerNameInput");
+        var savedPlayerName = sessionStorage.getItem("playerName");
+
+        if (savedPlayerName != null)
+        {
+            playerNameLabel.value = savedPlayerName;
+        }
+    }
+
+    function pageLoad() {
+        setHighestFightCountLabel();
+        loadName();
+    }
+
+    window.onload = pageLoad();
 </script>
